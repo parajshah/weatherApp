@@ -2,8 +2,8 @@ import React from "react";
 
 import sunriseLogo from "../img/sunrise.svg";
 import sunsetLogo from "../img/sunset.svg";
-import breeze from "../img/breeze.svg";
-import breezeNight from "../img/breeze-night.svg";
+import wind from "../img/wind.svg";
+import windNight from "../img/wind-night.svg";
 import cloudsDay from "../img/clouds-day.svg";
 import cloudsNight from "../img/clouds-night.svg";
 import drizzleDay from "../img/drizzle-day.svg";
@@ -319,8 +319,8 @@ const Weather = (props) => {
                   component="div"
                 >
                   <img
-                    src={breeze}
-                    alt="sunset"
+                    src={wind}
+                    alt="windLogo"
                     className={classes.sunsetLogo}
                   />
                 </Typography>
