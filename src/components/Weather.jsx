@@ -143,6 +143,61 @@ const Weather = (props) => {
     "en-IN"
   );
 
+  const weatherDataIcon = weatherData.weather[0].main;
+  const getCurrentWeatherIconDay = () => {
+    switch (weatherDataIcon) {
+      case "Clear":
+        return clearDay;
+      case "Drizzle":
+        return drizzleDay;
+      case "Thunderstorm":
+        return thunderstormDay;
+      case "Rain":
+        return rainDay;
+      case "Snow":
+        return snowDay;
+      case "Clouds":
+        return cloudsDay;
+      case "Smoke":
+        return smoke;
+      case "Fog":
+        return fogDay;
+      case "Mist":
+        return fogDay;
+      case "Haze":
+        return fogDay;
+      default:
+        return fogDay;
+    }
+  };
+  const getCurrentWeatherIconNight = () => {
+    switch (weatherDataIcon) {
+      case "Clear":
+        return clearNight;
+      case "Drizzle":
+        return drizzleNight;
+      case "Thunderstorm":
+        return thunderstormNight;
+      case "Rain":
+        return rainNight;
+      case "Snow":
+        return snowNight;
+      case "Clouds":
+        return cloudsNight;
+      case "Smoke":
+        return smoke;
+      case "Fog":
+        return fogNight;
+      case "Mist":
+        return fogNight;
+      case "Haze":
+        return fogNight;
+      default:
+        return fogNight;
+    }
+  };
+  const currentWeatherIcon = getCurrentWeatherIconDay();
+
   // console.log(
   //   temperature,
   //   maxTemperature,
