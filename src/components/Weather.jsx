@@ -1,7 +1,20 @@
 import React from "react";
 
-import sunriseLogo from "../sunrise.svg";
-import sunsetLogo from "../sunset.svg";
+import sunriseLogo from "../img/sunrise.svg";
+import sunsetLogo from "../img/sunset.svg";
+import breezeDay from "../img/breeze-day.svg";
+import breezeNight from "../img/breeze-night.svg";
+import cloudsDay from "../img/clouds-day.svg";
+import cloudsNight from "../img/clouds-night.svg";
+import drizzleDay from "../img/drizzle-day.svg";
+import fogDay from "../img/fog-day.svg";
+import fogNight from "../img/fog-night.svg";
+import rainDay from "../img/rain-day.svg";
+import rainNight from "../img/rain-night.svg";
+import rain from "../img/rain.svg";
+import snowDay from "../img/snow-day.svg";
+import snowNight from "../img/snow-night.svg";
+import sunny from "../img/sunny.svg";
 
 import clsx from "clsx";
 
@@ -30,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "100%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
@@ -51,8 +64,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   temperature: {
-    alignItems: "center",
-    padding: "16px 0",
+    padding: "8px 0",
   },
   sunriseLogo: {
     width: "75px",
@@ -67,7 +79,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
   },
   sunriseSunset: {
-    padding: "16px 0",
+    padding: "8px 0",
+  },
+  additionalDetails: {
+    padding: "8px 0",
   },
 }));
 
@@ -75,13 +90,26 @@ const Weather = (props) => {
   const { weatherData } = props;
 
   const d = new Date();
-  const seconds = d.getSeconds();
-  const minutes = d.getMinutes();
-  const hours = d.getHours();
   const day = d.getDate();
   const month = d.getMonth();
   const year = d.getFullYear();
-  const date = `${hours}:${minutes}:${seconds}, ${day}/${month}/${year}`;
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const currentTime = new Date().toLocaleTimeString();
+  const currentDate = `${day} ${months[month]}, ${year}`;
+  const date = currentTime + ", " + currentDate;
 
   const temperature = Math.floor(weatherData.main.temp);
   const maxTemperature = Math.floor(weatherData.main.temp_max);
@@ -125,14 +153,14 @@ const Weather = (props) => {
 
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="weather"
+          image={cloudsDay}
+          title="Weather"
         />
 
         <CardContent>
           <Grid container>
             <Grid item xs={9} sm={10} container direction="column">
-              <Typography variant="h4" color="textSecondary" component="p">
+              <Typography variant="h4" color="textPrimary" component="p">
                 {weatherData.weather[0].main}
               </Typography>
               <Typography variant="body1" color="textSecondary" component="p">
@@ -140,7 +168,7 @@ const Weather = (props) => {
               </Typography>
             </Grid>
             <Grid item xs={3} sm={2} className={classes.temperatureMain}>
-              <Typography variant="h5" color="textSecondary" component="p">
+              <Typography variant="h5" color="textPrimary" component="p">
                 {temperature}&deg;C
               </Typography>
             </Grid>
@@ -177,21 +205,34 @@ const Weather = (props) => {
         >
           <CardContent>
             <Grid container className={classes.temperature}>
-              <Grid item xs={8} sm={10}>
-                <Typography variant="h5" color="textSecondary" component="p">
+              <Grid item xs={12}>
+                <Typography variant="h6" color="textPrimary" component="h6">
                   Temperature
                 </Typography>
               </Grid>
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={12}>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  Min: {minTemperature}&deg;C
+                  Min:{" "}
+                  <span>
+                    <b>{minTemperature}</b>
+                  </span>
+                  &deg;C
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  Max: {maxTemperature}&deg;C
+                  Max:{" "}
+                  <span>
+                    <b>{maxTemperature}</b>
+                  </span>
+                  &deg;C
                 </Typography>
               </Grid>
             </Grid>
             <Grid container className={classes.sunriseSunset}>
+              <Grid item xs={12}>
+                <Typography variant="h6" color="textPrimary" component="h6">
+                  Sunrise & Sunset
+                </Typography>
+              </Grid>
               <Grid item xs={6} className={classes.sunrise}>
                 <Typography
                   variant="body1"
