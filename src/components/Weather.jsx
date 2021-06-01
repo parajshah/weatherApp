@@ -2,19 +2,29 @@ import React from "react";
 
 import sunriseLogo from "../img/sunrise.svg";
 import sunsetLogo from "../img/sunset.svg";
-import wind from "../img/wind.svg";
-import windNight from "../img/wind-night.svg";
-import cloudsDay from "../img/clouds-day.svg";
-import cloudsNight from "../img/clouds-night.svg";
-import drizzleDay from "../img/drizzle-day.svg";
-import fogDay from "../img/fog-day.svg";
-import fogNight from "../img/fog-night.svg";
+import clearDay from "../img/clear-day.svg";
+import clearNight from "../img/clear-night.svg";
+import rain from "../img/rain.svg";
 import rainDay from "../img/rain-day.svg";
 import rainNight from "../img/rain-night.svg";
-import rain from "../img/rain.svg";
+import wind from "../img/wind.svg";
+import windDay from "../img/wind-day.svg";
+import windNight from "../img/wind-night.svg";
+import clouds from "../img/clouds.svg";
+import cloudsDay from "../img/clouds-day.svg";
+import cloudsNight from "../img/clouds-night.svg";
+import drizzle from "../img/drizzle.svg";
+import drizzleDay from "../img/drizzle-day.svg";
+import drizzleNight from "../img/drizzle-night.svg";
+import fog from "../img/fog.svg";
+import fogDay from "../img/fog-day.svg";
+import fogNight from "../img/fog-night.svg";
+import snow from "../img/snow.svg";
 import snowDay from "../img/snow-day.svg";
 import snowNight from "../img/snow-night.svg";
-import sunny from "../img/sunny.svg";
+import thunderstormDay from "../img/thunderstorm-day.svg";
+import thunderstormNight from "../img/thunderstorm-night.svg";
+import smoke from "../img/smoke.svg";
 
 import clsx from "clsx";
 
@@ -95,10 +105,8 @@ const useStyles = makeStyles((theme) => ({
 const Weather = (props) => {
   const { weatherData } = props;
 
-  const d = new Date();
-  const day = d.getDate();
-  const month = d.getMonth();
-  const year = d.getFullYear();
+  const [month, day, year] = new Date().toLocaleDateString("en-US").split("/");
+
   const months = [
     "Jan",
     "Feb",
@@ -114,7 +122,7 @@ const Weather = (props) => {
     "Dec",
   ];
   const currentTime = new Date().toLocaleTimeString();
-  const currentDate = `${day} ${months[month]}, ${year}`;
+  const currentDate = `${day} ${months[month - 1]}, ${year}`;
   const date = currentTime + ", " + currentDate;
 
   const temperature = Math.floor(weatherData.main.temp);
@@ -163,7 +171,7 @@ const Weather = (props) => {
 
         <CardMedia
           className={classes.media}
-          image={cloudsDay}
+          image={currentWeatherIcon}
           title="Weather"
         />
 
@@ -291,14 +299,14 @@ const Weather = (props) => {
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  Wind Speed:{" "}
+                  Speed:{" "}
                   <span>
                     <b>{windSpeed}</b>
                   </span>{" "}
                   m/s
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  Degrees:{" "}
+                  Deg:{" "}
                   <span>
                     <b>{windDegrees}</b>
                   </span>
