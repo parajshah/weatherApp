@@ -326,6 +326,36 @@ const Weather = (props) => {
                 </Typography>
               </Grid>
             </Grid>
+            <Grid container className={classes.additionalDetails}>
+              <Grid item xs={12}>
+                <Typography variant="h6" color="textPrimary" component="h6">
+                  Additional Details
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  Humidity:{" "}
+                  <span>
+                    <b>{humidity}</b>
+                  </span>
+                  %
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  Pressure:{" "}
+                  <span>
+                    <b>{pressure}</b>
+                  </span>{" "}
+                  hPa
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  Clouds:{" "}
+                  <span>
+                    <b>{cloudPercentage}</b>
+                  </span>
+                  %
+                </Typography>
+              </Grid>
+            </Grid>
           </CardContent>
         </Collapse>
       </Card>
