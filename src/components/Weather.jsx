@@ -2,7 +2,7 @@ import React from "react";
 
 import sunriseLogo from "../img/sunrise.svg";
 import sunsetLogo from "../img/sunset.svg";
-import breezeDay from "../img/breeze-day.svg";
+import breeze from "../img/breeze.svg";
 import breezeNight from "../img/breeze-night.svg";
 import cloudsDay from "../img/clouds-day.svg";
 import cloudsNight from "../img/clouds-night.svg";
@@ -81,6 +81,12 @@ const useStyles = makeStyles((theme) => ({
   sunriseSunset: {
     padding: "8px 0",
   },
+  wind: {
+    padding: "8px 0",
+  },
+  windLogo: {
+    textAlign: "right",
+  },
   additionalDetails: {
     padding: "8px 0",
   },
@@ -117,6 +123,10 @@ const Weather = (props) => {
   const feelsLikeTemp = Math.floor(weatherData.main.feels_like);
   const humidity = Math.floor(weatherData.main.humidity);
   const pressure = Math.floor(weatherData.main.pressure);
+  const cloudPercentage = Math.floor(weatherData.clouds.all);
+  const windSpeed = Math.floor(weatherData.wind.speed);
+  const windDegrees = Math.floor(weatherData.wind.deg);
+  const windGust = Math.floor(weatherData.wind.gust);
 
   const sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString(
     "en-IN"
@@ -212,6 +222,13 @@ const Weather = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1" color="textSecondary" component="p">
+                  Feels Like:{" "}
+                  <span>
+                    <b>{feelsLikeTemp}</b>
+                  </span>
+                  &deg;C
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
                   Min:{" "}
                   <span>
                     <b>{minTemperature}</b>
@@ -263,6 +280,49 @@ const Weather = (props) => {
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
                   <span>{sunset}</span>
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container className={classes.wind}>
+              <Grid item xs={12}>
+                <Typography variant="h6" color="textPrimary" component="h6">
+                  Wind
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  Wind Speed:{" "}
+                  <span>
+                    <b>{windSpeed}</b>
+                  </span>{" "}
+                  m/s
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  Degrees:{" "}
+                  <span>
+                    <b>{windDegrees}</b>
+                  </span>
+                  &deg;
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  Gust:{" "}
+                  <span>
+                    <b>{windGust}</b>
+                  </span>{" "}
+                  m/s
+                </Typography>
+              </Grid>
+              <Grid item xs={6} className={classes.windLogo}>
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  component="div"
+                >
+                  <img
+                    src={breeze}
+                    alt="sunset"
+                    className={classes.sunsetLogo}
+                  />
                 </Typography>
               </Grid>
             </Grid>
