@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
 const Weather = (props) => {
   const { weatherData } = props;
 
-  const [month, day, year] = new Date().toLocaleDateString("en-US").split("/");
+  const [day, month, year] = new Date().toLocaleDateString("en-IN").split("/");
 
   const months = [
     "Jan",
@@ -121,9 +121,8 @@ const Weather = (props) => {
     "Nov",
     "Dec",
   ];
-  const currentTime = new Date().toLocaleTimeString();
   const currentDate = `${day} ${months[month - 1]}, ${year}`;
-  const date = currentTime + ", " + currentDate;
+  const date = currentDate;
 
   const temperature = Math.floor(weatherData.main.temp);
   const maxTemperature = Math.floor(weatherData.main.temp_max);
@@ -136,12 +135,35 @@ const Weather = (props) => {
   const windDegrees = Math.floor(weatherData.wind.deg);
   const windGust = Math.floor(weatherData.wind.gust);
 
-  const sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString(
-    "en-IN"
-  );
-  const sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString(
-    "en-IN"
-  );
+  const sunriseUTC = new Date(
+    weatherData.sys.sunrise * 1000 + weatherData.timezone * 1000
+  ).toUTCString();
+
+  let sunriseHours = sunriseUTC.split(":")[0].slice(-2);
+  let sunriseMinutes = sunriseUTC.split(":")[1];
+  let sunriseAfternoon = false;
+  if (parseInt(sunriseHours) > 12) {
+    sunriseHours -= 12;
+    sunriseAfternoon = true;
+  }
+  const sunrise = `${sunriseHours}:${sunriseMinutes} ${
+    sunriseAfternoon ? "PM" : "AM"
+  }`;
+
+  const sunsetUTC = new Date(
+    weatherData.sys.sunset * 1000 + weatherData.timezone * 1000
+  ).toUTCString();
+
+  let sunsetHours = sunsetUTC.split(":")[0].slice(-2);
+  let sunsetMinutes = sunsetUTC.split(":")[1];
+  let sunsetAfternoon = false;
+  if (parseInt(sunsetHours) > 12) {
+    sunsetHours -= 12;
+    sunsetAfternoon = true;
+  }
+  const sunset = `${sunsetHours}:${sunsetMinutes} ${
+    sunsetAfternoon ? "PM" : "AM"
+  }`;
 
   const weatherDataIcon = weatherData.weather[0].main;
   const getCurrentWeatherIconDay = () => {
@@ -219,9 +241,9 @@ const Weather = (props) => {
     <Container maxWidth="sm">
       <Card className={classes.root}>
         <CardHeader
-          title={weatherData.name}
+          title={weatherData.name + ", " + weatherData.sys.country}
           subheader={date}
-          avatar={<Avatar>{weatherData.sys.country}</Avatar>}
+          // avatar={<Avatar>{weatherData.sys.country}</Avatar>}
         />
 
         <CardMedia
