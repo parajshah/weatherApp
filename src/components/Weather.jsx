@@ -35,7 +35,6 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  Container,
   IconButton,
   makeStyles,
   Typography,
@@ -49,11 +48,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "500px",
+    maxWidth: "",
   },
   media: {
     height: 0,
-    paddingTop: "100%", // 16:9
+    paddingTop: "100%",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -238,213 +237,195 @@ const Weather = (props) => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Card className={classes.root}>
-        <CardHeader
-          title={weatherData.name + ", " + weatherData.sys.country}
-          subheader={date}
-          // avatar={<Avatar>{weatherData.sys.country}</Avatar>}
-        />
+    <Card className={classes.root}>
+      <CardHeader
+        title={weatherData.name + ", " + weatherData.sys.country}
+        subheader={date}
+        // avatar={<Avatar>{weatherData.sys.country}</Avatar>}
+      />
 
-        <CardMedia
-          className={classes.media}
-          image={currentWeatherIcon}
-          title="Weather"
-        />
+      <CardMedia
+        className={classes.media}
+        image={currentWeatherIcon}
+        title="Weather"
+      />
 
+      <CardContent>
+        <Grid container>
+          <Grid item xs={9} sm={10} container direction="column">
+            <Typography variant="h4" color="textPrimary" component="p">
+              {weatherData.weather[0].main}
+            </Typography>
+            <Typography variant="body1" color="textSecondary" component="p">
+              {weatherData.weather[0].description}
+            </Typography>
+          </Grid>
+          <Grid item xs={3} sm={2} className={classes.temperatureMain}>
+            <Typography variant="h5" color="textPrimary" component="p">
+              {temperature}&deg;C
+            </Typography>
+          </Grid>
+        </Grid>
+      </CardContent>
+
+      <CardActions className={classes.actions}>
+        <div>
+          <IconButton>
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton>
+            <ShareIcon />
+          </IconButton>
+        </div>
+
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+
+      <Collapse
+        in={expanded}
+        timeout="auto"
+        unmountOnExit
+        disableStrictModeCompat
+      >
         <CardContent>
-          <Grid container>
-            <Grid item xs={9} sm={10} container direction="column">
-              <Typography variant="h4" color="textPrimary" component="p">
-                {weatherData.weather[0].main}
-              </Typography>
-              <Typography variant="body1" color="textSecondary" component="p">
-                {weatherData.weather[0].description}
+          <Grid container className={classes.temperature}>
+            <Grid item xs={12}>
+              <Typography variant="h6" color="textPrimary" component="h6">
+                Temperature
               </Typography>
             </Grid>
-            <Grid item xs={3} sm={2} className={classes.temperatureMain}>
-              <Typography variant="h5" color="textPrimary" component="p">
-                {temperature}&deg;C
+            <Grid item xs={12}>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Feels Like:{" "}
+                <span>
+                  <b>{feelsLikeTemp}</b>
+                </span>
+                &deg;C
+              </Typography>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Min:{" "}
+                <span>
+                  <b>{minTemperature}</b>
+                </span>
+                &deg;C
+              </Typography>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Max:{" "}
+                <span>
+                  <b>{maxTemperature}</b>
+                </span>
+                &deg;C
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container className={classes.sunriseSunset}>
+            <Grid item xs={12}>
+              <Typography variant="h6" color="textPrimary" component="h6">
+                Sunrise & Sunset
+              </Typography>
+            </Grid>
+            <Grid item xs={6} className={classes.sunrise}>
+              <Typography variant="body1" color="textSecondary" component="div">
+                <img
+                  src={sunriseLogo}
+                  alt="sunrise"
+                  className={classes.sunriseLogo}
+                />
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                <span>{sunrise}</span>
+              </Typography>
+            </Grid>
+            <Grid item xs={6} className={classes.sunset}>
+              <Typography variant="body1" color="textSecondary" component="div">
+                <img
+                  src={sunsetLogo}
+                  alt="sunset"
+                  className={classes.sunsetLogo}
+                />
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                <span>{sunset}</span>
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container className={classes.wind}>
+            <Grid item xs={12}>
+              <Typography variant="h6" color="textPrimary" component="h6">
+                Wind
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Speed:{" "}
+                <span>
+                  <b>{windSpeed}</b>
+                </span>{" "}
+                m/s
+              </Typography>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Deg:{" "}
+                <span>
+                  <b>{windDegrees}</b>
+                </span>
+                &deg;
+              </Typography>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Gust:{" "}
+                <span>
+                  <b>{windGust}</b>
+                </span>{" "}
+                m/s
+              </Typography>
+            </Grid>
+            <Grid item xs={6} className={classes.windLogo}>
+              <Typography variant="body1" color="textSecondary" component="div">
+                <img src={wind} alt="windLogo" className={classes.sunsetLogo} />
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container className={classes.additionalDetails}>
+            <Grid item xs={12}>
+              <Typography variant="h6" color="textPrimary" component="h6">
+                Additional Details
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Humidity:{" "}
+                <span>
+                  <b>{humidity}</b>
+                </span>
+                %
+              </Typography>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Pressure:{" "}
+                <span>
+                  <b>{pressure}</b>
+                </span>{" "}
+                hPa
+              </Typography>
+              <Typography variant="body1" color="textSecondary" component="p">
+                Clouds:{" "}
+                <span>
+                  <b>{cloudPercentage}</b>
+                </span>
+                %
               </Typography>
             </Grid>
           </Grid>
         </CardContent>
-
-        <CardActions className={classes.actions}>
-          <div>
-            <IconButton>
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton>
-              <ShareIcon />
-            </IconButton>
-          </div>
-
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-
-        <Collapse
-          in={expanded}
-          timeout="auto"
-          unmountOnExit
-          disableStrictModeCompat
-        >
-          <CardContent>
-            <Grid container className={classes.temperature}>
-              <Grid item xs={12}>
-                <Typography variant="h6" color="textPrimary" component="h6">
-                  Temperature
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Feels Like:{" "}
-                  <span>
-                    <b>{feelsLikeTemp}</b>
-                  </span>
-                  &deg;C
-                </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Min:{" "}
-                  <span>
-                    <b>{minTemperature}</b>
-                  </span>
-                  &deg;C
-                </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Max:{" "}
-                  <span>
-                    <b>{maxTemperature}</b>
-                  </span>
-                  &deg;C
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.sunriseSunset}>
-              <Grid item xs={12}>
-                <Typography variant="h6" color="textPrimary" component="h6">
-                  Sunrise & Sunset
-                </Typography>
-              </Grid>
-              <Grid item xs={6} className={classes.sunrise}>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  component="div"
-                >
-                  <img
-                    src={sunriseLogo}
-                    alt="sunrise"
-                    className={classes.sunriseLogo}
-                  />
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  <span>{sunrise}</span>
-                </Typography>
-              </Grid>
-              <Grid item xs={6} className={classes.sunset}>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  component="div"
-                >
-                  <img
-                    src={sunsetLogo}
-                    alt="sunset"
-                    className={classes.sunsetLogo}
-                  />
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  <span>{sunset}</span>
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.wind}>
-              <Grid item xs={12}>
-                <Typography variant="h6" color="textPrimary" component="h6">
-                  Wind
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Speed:{" "}
-                  <span>
-                    <b>{windSpeed}</b>
-                  </span>{" "}
-                  m/s
-                </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Deg:{" "}
-                  <span>
-                    <b>{windDegrees}</b>
-                  </span>
-                  &deg;
-                </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Gust:{" "}
-                  <span>
-                    <b>{windGust}</b>
-                  </span>{" "}
-                  m/s
-                </Typography>
-              </Grid>
-              <Grid item xs={6} className={classes.windLogo}>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  component="div"
-                >
-                  <img
-                    src={wind}
-                    alt="windLogo"
-                    className={classes.sunsetLogo}
-                  />
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container className={classes.additionalDetails}>
-              <Grid item xs={12}>
-                <Typography variant="h6" color="textPrimary" component="h6">
-                  Additional Details
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Humidity:{" "}
-                  <span>
-                    <b>{humidity}</b>
-                  </span>
-                  %
-                </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Pressure:{" "}
-                  <span>
-                    <b>{pressure}</b>
-                  </span>{" "}
-                  hPa
-                </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Clouds:{" "}
-                  <span>
-                    <b>{cloudPercentage}</b>
-                  </span>
-                  %
-                </Typography>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Collapse>
-      </Card>
-    </Container>
+      </Collapse>
+    </Card>
   );
 };
 
