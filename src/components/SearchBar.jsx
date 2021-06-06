@@ -14,10 +14,17 @@ const useStyles = makeStyles((theme) => ({
 const SearchBar = (props) => {
   const classes = useStyles();
 
-  const { cityName, setCityName, handleChange, setSearch } = props;
+  const { cityName, handleChange, setSearch } = props;
 
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        setSearch(
+          `${process.env.REACT_APP_API_URL}/weather/?q=${cityName}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
+        );
+        e.preventDefault();
+      }}
+    >
       <Grid container className={classes.root}>
         <Grid item xs={8}>
           <TextField
@@ -29,13 +36,8 @@ const SearchBar = (props) => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid
-          item
-          onClick={() => {
-            setSearch(cityName);
-          }}
-        >
-          <Button type="button" color="primary" variant="contained">
+        <Grid item>
+          <Button type="submit" color="primary" variant="contained">
             <Search />
           </Button>
         </Grid>

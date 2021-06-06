@@ -4,22 +4,22 @@ import sunriseLogo from "../img/sunrise.svg";
 import sunsetLogo from "../img/sunset.svg";
 import clearDay from "../img/clear-day.svg";
 import clearNight from "../img/clear-night.svg";
-import rain from "../img/rain.svg";
+// import rain from "../img/rain.svg";
 import rainDay from "../img/rain-day.svg";
 import rainNight from "../img/rain-night.svg";
 import wind from "../img/wind.svg";
 import windDay from "../img/wind-day.svg";
 import windNight from "../img/wind-night.svg";
-import clouds from "../img/clouds.svg";
+// import clouds from "../img/clouds.svg";
 import cloudsDay from "../img/clouds-day.svg";
 import cloudsNight from "../img/clouds-night.svg";
-import drizzle from "../img/drizzle.svg";
+// import drizzle from "../img/drizzle.svg";
 import drizzleDay from "../img/drizzle-day.svg";
 import drizzleNight from "../img/drizzle-night.svg";
-import fog from "../img/fog.svg";
+// import fog from "../img/fog.svg";
 import fogDay from "../img/fog-day.svg";
 import fogNight from "../img/fog-night.svg";
-import snow from "../img/snow.svg";
+// import snow from "../img/snow.svg";
 import snowDay from "../img/snow-day.svg";
 import snowNight from "../img/snow-night.svg";
 import thunderstormDay from "../img/thunderstorm-day.svg";
@@ -29,7 +29,7 @@ import smoke from "../img/smoke.svg";
 import clsx from "clsx";
 
 import {
-  Avatar,
+  // Avatar,
   Card,
   CardActions,
   CardContent,
@@ -47,9 +47,6 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: "",
-  },
   media: {
     height: 0,
     paddingTop: "100%",
@@ -187,6 +184,8 @@ const Weather = (props) => {
         return fogDay;
       case "Haze":
         return fogDay;
+      case "Dust":
+        return windDay;
       default:
         return fogDay;
     }
@@ -213,11 +212,29 @@ const Weather = (props) => {
         return fogNight;
       case "Haze":
         return fogNight;
+      case "Dust":
+        return windNight;
       default:
         return fogNight;
     }
   };
-  const currentWeatherIcon = getCurrentWeatherIconDay();
+
+  const dt = new Date(
+    weatherData.dt * 1000 + weatherData.timezone * 1000
+  ).toUTCString();
+
+  const currentWeatherIcon = () => {
+    if (dt > sunriseUTC) {
+      // console.log("Sunrise done");
+      if (dt > sunsetUTC) {
+        // console.log("Sunset done");
+        return getCurrentWeatherIconNight();
+      } else {
+        // console.log("Sunset not done");
+        return getCurrentWeatherIconDay();
+      }
+    }
+  };
 
   // console.log(
   //   temperature,
@@ -246,7 +263,7 @@ const Weather = (props) => {
 
       <CardMedia
         className={classes.media}
-        image={currentWeatherIcon}
+        image={currentWeatherIcon()}
         title="Weather"
       />
 
