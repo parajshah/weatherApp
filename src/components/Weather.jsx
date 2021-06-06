@@ -173,7 +173,7 @@ const Weather = (props) => {
         return fogDay;
       case "Haze":
         return fogDay;
-      case "Dust":
+      case "Squall":
         return windDay;
       default:
         return fogDay;
@@ -201,7 +201,7 @@ const Weather = (props) => {
         return fogNight;
       case "Haze":
         return fogNight;
-      case "Dust":
+      case "Squall":
         return windNight;
       default:
         return fogNight;
