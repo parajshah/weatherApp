@@ -101,7 +101,11 @@ const useStyles = makeStyles((theme) => ({
 const Weather = (props) => {
   const { weatherData } = props;
 
-  const [day, month, year] = new Date().toLocaleDateString("en-IN").split("/");
+  const [day, month, year] = new Date(
+    weatherData.dt * 1000 + weatherData.timezone * 1000
+  )
+    .toLocaleDateString("en-IN")
+    .split("/");
 
   const months = [
     "Jan",
@@ -233,6 +237,8 @@ const Weather = (props) => {
         // console.log("Sunset not done");
         return getCurrentWeatherIconDay();
       }
+    } else {
+      return getCurrentWeatherIconNight();
     }
   };
 
