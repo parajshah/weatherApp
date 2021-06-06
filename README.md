@@ -5,6 +5,10 @@
 3. User can search for a city using the searchbar
 4. Additional data like sunrise & sunset, wind data, humidity, pressure etc. can also be found when user clicks on the additional details icon (bottom - right)
 
+#### Important: Made for mobile screens, might not look appealing for larger screen sizes! <br>
+
+#### Feel free to suggest changes / improvements
+
 ## Installation
 
 1. Fork / Clone the repo
