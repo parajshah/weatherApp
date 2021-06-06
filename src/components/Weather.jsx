@@ -101,27 +101,12 @@ const useStyles = makeStyles((theme) => ({
 const Weather = (props) => {
   const { weatherData } = props;
 
-  const [day, month, year] = new Date(
+  const currentDate = new Date(
     weatherData.dt * 1000 + weatherData.timezone * 1000
   )
-    .toLocaleDateString("en-IN")
-    .split("/");
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const currentDate = `${day} ${months[month - 1]}, ${year}`;
+    .toUTCString()
+    .split(":")[0]
+    .slice(0, -2);
   const date = currentDate;
 
   const temperature = Math.floor(weatherData.main.temp);
@@ -264,7 +249,6 @@ const Weather = (props) => {
       <CardHeader
         title={weatherData.name + ", " + weatherData.sys.country}
         subheader={date}
-        // avatar={<Avatar>{weatherData.sys.country}</Avatar>}
       />
 
       <CardMedia
