@@ -27,7 +27,7 @@ const App = () => {
           setLong(position.coords.longitude);
         });
 
-        const url = `http://localhost:5000/weather/current-city/${lat},${long}`;
+        const url = `http://localhost:5000/weather-data/weather/current-city/${lat},${long}`;
 
         if (lat !== "" && long !== "") {
           setIsLoading(true);
@@ -48,7 +48,7 @@ const App = () => {
     const fetchData = async () => {
       setisError(false);
       try {
-        const url = `http://localhost:5000/weather/${cityName.toLowerCase()}`;
+        const url = `http://localhost:5000/weather-data/weather/${cityName.toLowerCase()}`;
         setIsLoading(true);
         await axios.get(url).then((result) => {
           console.log(result);
