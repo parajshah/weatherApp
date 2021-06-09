@@ -19,9 +19,7 @@ const SearchBar = (props) => {
   return (
     <form
       onSubmit={(e) => {
-        setSearch(
-          `${process.env.REACT_APP_API_URL}/weather/?q=${cityName}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
-        );
+        setSearch({ cityName });
         e.preventDefault();
       }}
     >

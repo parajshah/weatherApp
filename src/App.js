@@ -2,52 +2,67 @@ import { Container } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import Weather from "./components/Weather";
+import axios from "axios";
 
 const App = () => {
   const [data, setData] = useState([]);
   const [cityName, setCityName] = useState("");
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setisError] = useState(false);
 
-  const [search, setSearch] = useState(
-    `${process.env.REACT_APP_API_URL}/weather/?q=${cityName}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
-  );
+  const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
     setCityName(e.target.value);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude);
-        setLong(position.coords.longitude);
-      });
-
-      await fetch(
-        `${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          setData(result);
-          console.log(result);
+    const fetchDataForCurrentLocation = async () => {
+      setisError(false);
+      try {
+        navigator.geolocation.getCurrentPosition((position) => {
+          setLat(position.coords.latitude);
+          setLong(position.coords.longitude);
         });
+
+        const url = `http://localhost:5000/weather/current-city/${lat},${long}`;
+
+        if (lat !== "" && long !== "") {
+          setIsLoading(true);
+          await axios.get(url).then((result) => {
+            setData(result.data);
+          });
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setisError(true);
+        console.log("Error!");
+      }
     };
-    fetchData();
+    fetchDataForCurrentLocation();
   }, [lat, long]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(
-        `${process.env.REACT_APP_API_URL}/weather/?q=${cityName}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          setData(result);
+      setisError(false);
+      try {
+        const url = `http://localhost:5000/weather/${cityName.toLowerCase()}`;
+        setIsLoading(true);
+        await axios.get(url).then((result) => {
           console.log(result);
+          setData(result.data);
         });
+        setIsLoading(false);
+      } catch (error) {
+        setisError(true);
+        console.log("Error!!");
+      }
     };
-    fetchData();
+    if (cityName !== "") {
+      fetchData();
+    }
     setCityName("");
   }, [search]);
 
@@ -59,7 +74,16 @@ const App = () => {
           handleChange={handleChange}
           setSearch={setSearch}
         />
-        {typeof data.main != "undefined" ? (
+        {isError ? (
+          <div>
+            <h1>Something went wrong...</h1>
+            <h1>Try refreshing or enter a proper city name!</h1>
+          </div>
+        ) : isLoading ? (
+          <div>
+            <h1>Loading Data...</h1>
+          </div>
+        ) : typeof data.main != "undefined" ? (
           <Weather weatherData={data} />
         ) : (
           <div>
