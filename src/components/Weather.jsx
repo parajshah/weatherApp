@@ -1,5 +1,7 @@
+// imports from react
 import React from "react";
 
+// import images
 import sunriseLogo from "../img/sunrise.svg";
 import sunsetLogo from "../img/sunset.svg";
 import clearDay from "../img/clear-day.svg";
@@ -26,10 +28,9 @@ import thunderstormDay from "../img/thunderstorm-day.svg";
 import thunderstormNight from "../img/thunderstorm-night.svg";
 import smoke from "../img/smoke.svg";
 
+// imports from Material-ui
 import clsx from "clsx";
-
 import {
-  // Avatar,
   Card,
   CardActions,
   CardContent,
@@ -46,6 +47,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+// Material-ui styling
 const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
@@ -101,14 +103,13 @@ const useStyles = makeStyles((theme) => ({
 const Weather = (props) => {
   const { weatherData } = props;
 
-  const currentDate = new Date(
-    weatherData.dt * 1000 + weatherData.timezone * 1000
-  )
+  // current date
+  const date = new Date(weatherData.dt * 1000 + weatherData.timezone * 1000)
     .toUTCString()
     .split(":")[0]
     .slice(0, -2);
-  const date = currentDate;
 
+  // data from api
   const temperature = Math.floor(weatherData.main.temp);
   const maxTemperature = Math.floor(weatherData.main.temp_max);
   const minTemperature = Math.floor(weatherData.main.temp_min);
@@ -124,6 +125,7 @@ const Weather = (props) => {
     weatherData.sys.sunrise * 1000 + weatherData.timezone * 1000
   ).toUTCString();
 
+  // finding sunrise from api data
   let sunriseHours = sunriseUTC.split(":")[0].slice(-2);
   let sunriseMinutes = sunriseUTC.split(":")[1];
   let sunriseAfternoon = false;
@@ -139,6 +141,7 @@ const Weather = (props) => {
     weatherData.sys.sunset * 1000 + weatherData.timezone * 1000
   ).toUTCString();
 
+  // finding sunset from api data
   let sunsetHours = sunsetUTC.split(":")[0].slice(-2);
   let sunsetMinutes = sunsetUTC.split(":")[1];
   let sunsetAfternoon = false;
@@ -150,7 +153,9 @@ const Weather = (props) => {
     sunsetAfternoon ? "PM" : "AM"
   }`;
 
+  // assigning weather icon from api data
   const weatherDataIcon = weatherData.weather[0].main;
+  // day icons
   const getCurrentWeatherIconDay = () => {
     switch (weatherDataIcon) {
       case "Clear":
@@ -179,6 +184,7 @@ const Weather = (props) => {
         return fogDay;
     }
   };
+  // night icons
   const getCurrentWeatherIconNight = () => {
     switch (weatherDataIcon) {
       case "Clear":
@@ -212,6 +218,7 @@ const Weather = (props) => {
     weatherData.dt * 1000 + weatherData.timezone * 1000
   ).toUTCString();
 
+  // setting icon
   const currentWeatherIcon = () => {
     if (dt > sunriseUTC) {
       // console.log("Sunrise done");
@@ -227,17 +234,9 @@ const Weather = (props) => {
     }
   };
 
-  // console.log(
-  //   temperature,
-  //   maxTemperature,
-  //   minTemperature,
-  //   feelsLikeTemp,
-  //   humidity,
-  //   pressure
-  // );
-
   const classes = useStyles();
 
+  // state of collapse (Material-ui)
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
