@@ -1,25 +1,16 @@
 # Weather App
 
 1. This is a weather application, that shows the current weather data of cities (over 200,000+) using `openweather - API`
-2. Upon installation, it asks for user's current location and displays weather data accordingly (If user gives permission)
+2. It asks for user's current location and displays weather data accordingly (If user gives permission)
 3. User can search for a city using the searchbar
 4. Additional data like sunrise & sunset, wind data, humidity, pressure etc. can also be found when user clicks on the additional details icon (bottom - right)
 
 #### Important: Made for mobile screens, might not look appealing for larger screen sizes! <br>
 
-#### Feel free to suggest changes / improvements
+## Deployed on
 
-## Installation
-
-1. Fork / Clone the repo
-2. Run command `npm install`
-3. Create new .env file in the parent folder
-4. Add the following lines inside the .env file <br>
-   `REACT_APP_API_URL = 'https://api.openweathermap.org/data/2.5'` <br>
-   `REACT_APP_API_KEY = 'YOUR API KEY'` <br>
-   `REACT_APP_ICON_URL = 'https://openweathermap.org/img/w'` <br>
-5. Replace `'YOUR API KEY'` with your API key from openweather API
-6. Start the application by typing `npm start`
+Front-end -> Netlify -> https://weather-app-paraj-shah.netlify.app/ <br>
+Back-end -> Heroku
 
 ## Demo
 
@@ -37,6 +28,8 @@ Additional details displayed, when user clicks on the button <br><br>
 
 1. `React`
 2. `Material-UI`
+3. `Node js`
+4. `Express`
 
 ## Open weather API
 
