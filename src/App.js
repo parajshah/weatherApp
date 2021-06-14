@@ -13,8 +13,8 @@ const App = () => {
   // state variables
   const [data, setData] = useState([]);
   const [cityName, setCityName] = useState("");
-  const [lat, setLat] = useState([]);
-  const [long, setLong] = useState([]);
+  const [lat, setLat] = useState("");
+  const [long, setLong] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setisError] = useState(false);
   const [search, setSearch] = useState("");
