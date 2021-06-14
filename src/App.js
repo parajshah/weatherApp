@@ -13,8 +13,6 @@ const App = () => {
   // state variables
   const [data, setData] = useState([]);
   const [cityName, setCityName] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setisError] = useState(false);
   const [search, setSearch] = useState("");
@@ -23,34 +21,40 @@ const App = () => {
     setCityName(e.target.value);
   };
 
-  useEffect(() => {
-    const fetchDataForCurrentLocation = async () => {
-      setisError(false);
-      try {
-        // get current location
-        navigator.geolocation.getCurrentPosition((position) => {
-          setLat(position.coords.latitude);
-          setLong(position.coords.longitude);
-        });
+  // commented out this code because it was causing multipla API calls from a mobile device
+  // as the GPS in mobile devices is more sensitive to changes
 
-        const url = `https://weather-app-server-0308.herokuapp.com/weather-data/weather/current-city/${lat},${long}`;
+  // const [lat, setLat] = useState("");
+  // const [long, setLong] = useState("");
 
-        if (lat !== "" && long !== "") {
-          setIsLoading(true);
-          // get data from server
-          await axios.get(url).then((result) => {
-            // console.log(result);
-            setData(result.data);
-          });
-          setIsLoading(false);
-        }
-      } catch (error) {
-        setisError(true);
-        console.log("Error!");
-      }
-    };
-    fetchDataForCurrentLocation();
-  }, [lat, long]);
+  // useEffect(() => {
+  //   const fetchDataForCurrentLocation = async () => {
+  //     setisError(false);
+  //     try {
+  //       // get current location
+  //       navigator.geolocation.getCurrentPosition((position) => {
+  //         setLat(position.coords.latitude);
+  //         setLong(position.coords.longitude);
+  //       });
+
+  //       const url = `https://weather-app-server-0308.herokuapp.com/weather-data/weather/current-city/${lat},${long}`;
+
+  //       if (lat !== "" && long !== "") {
+  //         setIsLoading(true);
+  //         // get data from server
+  //         await axios.get(url).then((result) => {
+  //           // console.log(result);
+  //           setData(result.data);
+  //         });
+  //         setIsLoading(false);
+  //       }
+  //     } catch (error) {
+  //       setisError(true);
+  //       console.log("Error!");
+  //     }
+  //   };
+  //   fetchDataForCurrentLocation();
+  // }, [lat, long]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,7 +100,7 @@ const App = () => {
           <Weather weatherData={data} />
         ) : (
           <div>
-            <h1>No City Found</h1>
+            <h1>Search for a city!</h1>
           </div>
         )}
       </Container>
