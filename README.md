@@ -10,7 +10,7 @@
 ## Deployed on
 
 Front-end -> Netlify -> https://weather-app-paraj-shah.netlify.app/ <br>
-Back-end -> Heroku
+Back-end -> Heroku -> If you need the code for back-end, feel free to connect with me here or on https://www.linkedin.com/in/paraj-shah
 
 ## Demo
 
