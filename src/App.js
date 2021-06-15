@@ -8,6 +8,7 @@ import Weather from "./components/Weather";
 
 // import axios
 import axios from "axios";
+import Loader from "./components/Loader";
 
 const App = () => {
   // state variables
@@ -93,9 +94,7 @@ const App = () => {
             <h1>Try refreshing or enter a proper city name!</h1>
           </div>
         ) : isLoading ? (
-          <div>
-            <h1>Loading Data...</h1>
-          </div>
+          <Loader />
         ) : typeof data.main != "undefined" ? (
           <Weather weatherData={data} />
         ) : (
