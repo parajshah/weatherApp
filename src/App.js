@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from "react";
 
 // imports from Material-ui
-import { Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import SearchBar from "./components/SearchBar";
 import Weather from "./components/Weather";
 import Loader from "./components/Loader";
 import Error from "./components/Error";
+import HomePageMessage from "./components/HomePageMessage";
+
+import "./App.css";
 
 // import axios
 import axios from "axios";
@@ -84,21 +87,28 @@ const App = () => {
   return (
     <React.Fragment>
       <Container maxWidth="xs">
-        <SearchBar
-          cityName={cityName}
-          handleChange={handleChange}
-          setSearch={setSearch}
-        />
         {isError ? (
           <Error />
         ) : isLoading ? (
           <Loader />
         ) : typeof data.main != "undefined" ? (
-          <Weather weatherData={data} />
+          <>
+            <SearchBar
+              cityName={cityName}
+              handleChange={handleChange}
+              setSearch={setSearch}
+            />
+            <Weather weatherData={data} />
+          </>
         ) : (
-          <div>
-            <h1>Search for a city!</h1>
-          </div>
+          <>
+            <HomePageMessage />
+            <SearchBar
+              cityName={cityName}
+              handleChange={handleChange}
+              setSearch={setSearch}
+            />
+          </>
         )}
       </Container>
     </React.Fragment>

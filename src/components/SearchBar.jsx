@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-around",
     padding: "16px 0",
+    height: "15vh",
   },
 }));
 
