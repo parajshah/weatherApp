@@ -13,14 +13,18 @@ Back-end -> Heroku -> If you need the code for back-end, feel free to connect wi
 
 ## Demo
 
-### Default Page<br>
+### Home Page<br>
 
-![default](https://user-images.githubusercontent.com/65371747/120936457-7b394400-c725-11eb-8453-d84329e08438.jpg) <br><br>
+![Homepage](https://user-images.githubusercontent.com/65371747/122064593-e44c4600-ce0e-11eb-9ac6-259d38e061bd.jpg)
 
-### Additional details
+### Weather Page<br>
 
-Additional details displayed, when user clicks on the button <br><br>
-![additional](https://user-images.githubusercontent.com/65371747/120936455-7a081700-c725-11eb-9d7a-5484a2cca0b5.jpg)
+![Weather page](https://user-images.githubusercontent.com/65371747/122064582-e2828280-ce0e-11eb-89bd-bb73f131ed8d.jpg)
+
+### Additional Details Page
+
+Displayed when user clicks on the additional details icon (bottom right) <br><br>
+![Additional details](https://user-images.githubusercontent.com/65371747/122064589-e3b3af80-ce0e-11eb-9427-4960ef91c585.jpg)
 
 ## Tech Stach
 
