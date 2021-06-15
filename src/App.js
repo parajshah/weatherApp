@@ -5,10 +5,11 @@ import React, { useEffect, useState } from "react";
 import { Container } from "@material-ui/core";
 import SearchBar from "./components/SearchBar";
 import Weather from "./components/Weather";
+import Loader from "./components/Loader";
+import Error from "./components/Error";
 
 // import axios
 import axios from "axios";
-import Loader from "./components/Loader";
 
 const App = () => {
   // state variables
@@ -89,10 +90,7 @@ const App = () => {
           setSearch={setSearch}
         />
         {isError ? (
-          <div>
-            <h1>Something went wrong...</h1>
-            <h1>Try refreshing or enter a proper city name!</h1>
-          </div>
+          <Error />
         ) : isLoading ? (
           <Loader />
         ) : typeof data.main != "undefined" ? (
